@@ -896,6 +896,17 @@ core_connect(Conn * s)
 		goto failure;
 
 	if (param.hog) {
+
+        if (param.modsec > 0)
+        {
+            char ip[16];
+            sprintf(ip, "127.%d.%d.%d", rand() % 249, rand() % 249, rand() % 249);
+            struct hostent *he = gethostbyname(ip);
+            memcpy(&myaddr.sin_addr, he->h_addr_list[0], he->h_length);
+            myaddr.sin_family = AF_INET;
+
+        }
+
 		while (1) {
 			myport = port_get();
 			if (myport < 0)

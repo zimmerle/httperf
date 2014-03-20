@@ -151,6 +151,7 @@ static struct option longopts[] = {
 	{"wsesslog", required_argument, (int *) &param.wsesslog, 0},
 	{"wsesspage", required_argument, (int *) &param.wsesspage, 0},
 	{"wset", required_argument, (int *) &param.wset, 0},
+    {"modsec",     required_argument, (int *) &param.modsec, 0},
 	{0, 0, 0, 0}
 };
 
@@ -166,6 +167,7 @@ usage(void)
 	       "\t[--period [d|u|e]T1[,T2]|[v]T1,D1[,T2,D2]...[,Tn,Dn]\n"
 	       "\t[--print-reply [header|body]] [--print-request [header|body]]\n"
 	       "\t[--rate X] [--recv-buffer N] [--retry-on-failure] "
+           "\t[--modsec N]\n"
 	       "[--send-buffer N]\n"
 	       "\t[--server S] [--server-name S] [--port N] [--uri S] \n"
 #ifdef HAVE_SSL
@@ -238,6 +240,8 @@ main(int argc, char **argv)
 	Time            t;
 
 	int             numRates = 0;
+
+    srand(time(NULL)); 
 
 #ifdef __FreeBSD__
 	/*
@@ -342,6 +346,7 @@ main(int argc, char **argv)
 						prog_name, optarg);
 					exit(1);
 				}
+
 			} else if (flag == &param.max_conns) {
 				errno = 0;
 				param.max_conns = strtoul(optarg, &end, 10);

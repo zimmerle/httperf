@@ -41,6 +41,10 @@
 
 #define NUM_RATES 16
 
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
 typedef enum Dist_Type
   {
     DETERMINISTIC,	/* also called fixed-rate */
@@ -104,6 +108,7 @@ typedef struct Cmdline_Params
     int max_piped;	/* max # of piped calls per connection */
     int max_conns;	/* max # of connections per session */
     int hog;		/* client may hog as much resources as possible */
+    int modsec;
     int send_buffer_size;
     int recv_buffer_size;
     int failure_status;	/* status code that should be considered failure */
